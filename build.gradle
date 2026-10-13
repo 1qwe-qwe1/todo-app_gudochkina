@@ -3,16 +3,14 @@ import jdk.internal.org.jline.utils.ShutdownHooks
 plugins {
     id 'java'
     id 'application'
-    id 'com.gradleup.shadow' version '9.2.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'org.example'
 version = findProperty('version') ?: '0.1.0'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
-}
+sourceCompatibility = '23'
+targetCompatibility = '23'
 
 mainClassName = 'org.example.TodoApp'
 
@@ -40,19 +38,19 @@ tasks.jar {
     enabled = false
 }
 
-tasks.named('distZip') { ShutdownHooks.Task it ->
+tasks.named('distZip') { Task it ->
     dependsOn tasks.named('shadowJar')
 }
 
-tasks.named('distTar') { ShutdownHooks.Task it ->
+tasks.named('distTar') { Task it ->
     dependsOn tasks.named('shadowJar')
 }
 
-tasks.named('startScripts') { ShutdownHooks.Task it ->
+tasks.named('startScripts') { Task it ->
     dependsOn tasks.named('shadowJar')
 }
 
-tasks.named('startShadowScripts') { ShutdownHooks.Task it ->
+tasks.named('startShadowScripts') { Task it ->
     dependsOn tasks.named('jar')
 }
 
